@@ -10,6 +10,8 @@ const chatRoute = require("./routes/ChatRoute")
 
 require('dotenv').config()
 
+const port = process.env.PORT || 3000;
+
 mongoose.connect(process.env.MONGO_URL).then(
     console.log("Database connected")).catch(err=>{
         console.log(err);
@@ -22,6 +24,14 @@ mongoose.connect(process.env.MONGO_URL).then(
         }
     })
     
+    // const httpServer = require("http").createServer();
+
+    // const io = require("socket.io")(httpServer, {
+    //     cors: {
+    //     origin :"http://localhost:3000",
+    //       methods: ["GET", "POST"]
+    //     }
+    //   });
     
     let activeUsers = []
     
@@ -81,6 +91,10 @@ app.use("/api/post",postRoute)
 
 app.use("/api/chat",chatRoute)
 
-app.listen(5000,()=> {
-    console.log("server is up and running at port number 5000");
-})
+// app.listen(process.env.PORT || 5000,()=> {
+//     console.log("server is up and running at port number 5000");
+// })
+
+app.listen(port, () => {
+    console.log(`App listening at http://localhost:${port}`);
+});
